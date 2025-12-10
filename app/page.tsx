@@ -1,64 +1,181 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState } from 'react';
+import type { Product } from './types/product';
+import { products } from './data/products';
+import { ProductCard } from './components/ProductCard';
+import { CompareView } from './components/CompareView';
+import { PreviewView } from './components/PreviewView';
+import { ProfileView } from './components/ProfileView';
+import { CartView } from './components/CartView';
+import { ShoppingBag, GitCompare, Eye, User, ShoppingCart } from 'lucide-react';
+
+type View = 'browse' | 'compare' | 'preview' | 'profile' | 'cart';
+
+export default function App() {
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [cartProducts, setCartProducts] = useState<Product[]>([]);
+  const [currentView, setCurrentView] = useState<View>('browse');
+
+  const toggleProductSelection = (product: Product) => {
+    setSelectedProducts(prev => {
+      const isSelected = prev.find(p => p.id === product.id);
+      if (isSelected) {
+        return prev.filter(p => p.id !== product.id);
+      } else {
+        return [...prev, product];
+      }
+    });
+  };
+
+  const removeFromComparison = (productId: number) => {
+    setSelectedProducts(prev => prev.filter(p => p.id !== productId));
+  };
+
+  const isProductSelected = (productId: number) => {
+    return selectedProducts.some(p => p.id === productId);
+  };
+
+  const addToCart = (product: Product) => {
+    setCartProducts(prev => {
+      const isInCart = prev.find(p => p.id === product.id);
+      if (!isInCart) {
+        return [...prev, product];
+      }
+      return prev;
+    });
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCartProducts(prev => prev.filter(p => p.id !== productId));
+  };
+
+  const isInCart = (productId: number) => {
+    return cartProducts.some(p => p.id === productId);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-8 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-gray-900">StyleCompare</h1>
+            
+            <div className="flex items-center gap-2">
+              <nav className="flex gap-2">
+                <button
+                  onClick={() => setCurrentView('browse')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                    currentView === 'browse' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  <ShoppingBag className="w-5 h-5" />
+                  Browse
+                </button>
+                
+                <button
+                  onClick={() => setCurrentView('compare')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors relative ${
+                    currentView === 'compare' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  <GitCompare className="w-5 h-5" />
+                  Compare
+                  {selectedProducts.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                      {selectedProducts.length}
+                    </span>
+                  )}
+                </button>
+              </nav>
+              
+              <button 
+                onClick={() => setCurrentView('cart')}
+                className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors relative ${
+                  currentView === 'cart'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {cartProducts.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                    {cartProducts.length}
+                  </span>
+                )}
+              </button>
+              
+              <button 
+                onClick={() => setCurrentView('profile')}
+                className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                  currentView === 'profile'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <User className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-8 py-8">
+        {currentView === 'browse' && (
+          <div>
+            <div className="mb-6">
+              <h2>Available Products</h2>
+              <p className="text-gray-600">
+                Select items to compare and preview outfit combinations
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isSelected={isProductSelected(product.id)}
+                  onToggleSelect={toggleProductSelection}
+                  onAddToCart={addToCart}
+                  isInCart={isInCart(product.id)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentView === 'compare' && (
+          <CompareView
+            products={selectedProducts}
+            onRemove={removeFromComparison}
+            onPreview={() => setCurrentView('preview')}
+          />
+        )}
+
+        {currentView === 'preview' && (
+          <PreviewView 
+            products={selectedProducts}
+            onBack={() => setCurrentView('compare')}
+          />
+        )}
+
+        {currentView === 'profile' && (
+          <ProfileView />
+        )}
+
+        {currentView === 'cart' && (
+          <CartView
+            products={cartProducts}
+            onRemove={removeFromCart}
+          />
+        )}
       </main>
     </div>
   );
