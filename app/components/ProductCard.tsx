@@ -32,7 +32,7 @@ export function ProductCard({ product, isSelected, onToggleSelect, onAddToCart, 
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="flex-1">{product.name}</h3>
+          <h3 className="text-black">{product.name}</h3>
           <span className="text-blue-600 ml-2">${product.price}</span>
         </div>
         <p className="text-gray-600 mb-2">{product.description}</p>

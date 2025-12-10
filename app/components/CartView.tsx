@@ -35,7 +35,7 @@ export function CartView({ products, onRemove }: CartViewProps) {
 
   return (
     <div>
-      <div className="mb-6">
+      <div className="text-black mb-6">
         <h2>Shopping Cart</h2>
         <p className="text-gray-600">
           {products.length} {products.length === 1 ? 'item' : 'items'} in your cart
@@ -57,7 +57,7 @@ export function CartView({ products, onRemove }: CartViewProps) {
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="mb-1">{product.name}</h3>
+                  <h3 className="text-black mb-1">{product.name}</h3>
                   <p className="text-gray-600 text-sm mb-2">{product.description}</p>
                   <div className="flex items-center gap-2 mb-2">
                     <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">

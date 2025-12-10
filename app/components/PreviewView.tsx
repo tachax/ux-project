@@ -117,7 +117,7 @@ export function PreviewView({ products, onBack }: PreviewViewProps) {
                 style={{ backgroundColor: item.product.color.toLowerCase() }}
               />
               <div>
-                <p className="text-sm">{item.product.name}</p>
+                <p className="text-black">{item.product.name}</p>
                 <p className="text-xs text-gray-500">{item.product.category}</p>
               </div>
             </div>

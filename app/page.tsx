@@ -60,7 +60,7 @@ export default function App() {
       <header className="bg-white shadow-sm sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-gray-900">StyleCompare</h1>
+            <h1 className="text-gray-900">Fit Compare</h1>
             
             <div className="flex items-center gap-2">
               <nav className="flex gap-2">
@@ -129,7 +129,7 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-8 py-8">
         {currentView === 'browse' && (
           <div>
-            <div className="mb-6">
+            <div className="text-black">
               <h2>Available Products</h2>
               <p className="text-gray-600">
                 Select items to compare and preview outfit combinations

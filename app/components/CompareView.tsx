@@ -11,7 +11,7 @@ interface CompareViewProps {
 export function CompareView({ products, onRemove, onPreview }: CompareViewProps) {
   return (
     <div className="p-6">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="text-black flex items-center justify-between">
         <h2>Compare Products ({products.length})</h2>
         <button
           onClick={onPreview}
@@ -40,7 +40,7 @@ export function CompareView({ products, onRemove, onPreview }: CompareViewProps)
             </div>
             
             <div className="p-4">
-              <div className="flex items-start justify-between mb-3">
+              <div className="text-black flex items-start justify-between mb-3">
                 <h3>{product.name}</h3>
                 <span className="text-blue-600 ml-2">${product.price}</span>
               </div>
@@ -50,15 +50,15 @@ export function CompareView({ products, onRemove, onPreview }: CompareViewProps)
               <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Category:</span>
-                  <span className="px-2 py-1 bg-gray-100 rounded text-sm">{product.category}</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-black">{product.category}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Color:</span>
-                  <span>{product.color}</span>
+                  <span className="text-black">{product.color}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Material:</span>
-                  <span>{product.material}</span>
+                  <span className="text-black">{product.material}</span>
                 </div>
               </div>
               
