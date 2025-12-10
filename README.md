@@ -2,19 +2,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, clone the repository
+1- Clone the repository
 
 ```bash
 git clone https://github.com/tachax/ux-project.git
 ```
 
-Install npm
+2- Enter the correct folder
+
+3- Install npm
 
 ```bash
 npm install
 ```
 
-Run the development server:
+4- Run the development server:
 
 ```bash
 npm run dev
